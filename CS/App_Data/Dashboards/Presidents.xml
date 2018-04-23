@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard CurrencyCulture="en-US">
+  <Title Text="Presidents" Alignment="Left" />
+  <DataSources>
+    <ExcelDataSource Name="Excel Data Source" FileName="|DataDirectory|Data\PresidentsData.xlsx" ComponentName="dashboardExcelDataSource1">
+      <Options Type="DevExpress.DataAccess.Excel.ExcelSourceOptions" SkipEmptyRows="true" UseFirstRowAsHeader="true" SkipHiddenColumns="true" SkipHiddenRows="true">
+        <ImportSettings Type="DevExpress.DataAccess.Excel.ExcelWorksheetSettings" WorksheetName="List" />
+      </Options>
+      <Schema>
+        <FieldInfo Name="Number" Type="System.Double" Selected="true" />
+        <FieldInfo Name="Photo" Type="System.String" Selected="false" />
+        <FieldInfo Name="First Name" Type="System.String" Selected="true" />
+        <FieldInfo Name="Last Name" Type="System.String" Selected="true" />
+        <FieldInfo Name="Birth Date" Type="System.DateTime" Selected="true" />
+        <FieldInfo Name="Death Date" Type="System.DateTime" Selected="true" />
+        <FieldInfo Name="State" Type="System.String" Selected="true" />
+        <FieldInfo Name="Presidency Start" Type="System.DateTime" Selected="true" />
+        <FieldInfo Name="Presidency End" Type="System.DateTime" Selected="true" />
+        <FieldInfo Name="Party" Type="System.String" Selected="true" />
+      </Schema>
+      <ResultSchema>
+        <View>
+          <Field Name="Number" Type="Double" />
+          <Field Name="First Name" Type="String" />
+          <Field Name="Last Name" Type="String" />
+          <Field Name="Birth Date" Type="DateTime" />
+          <Field Name="Death Date" Type="DateTime" />
+          <Field Name="State" Type="String" />
+          <Field Name="Presidency Start" Type="DateTime" />
+          <Field Name="Presidency End" Type="DateTime" />
+          <Field Name="Party" Type="String" />
+        </View>
+      </ResultSchema>
+      <CalculatedFields>
+        <CalculatedField Name="President" Expression="[First Name] + ' ' + [Last Name]" DataType="Auto" />
+        <CalculatedField Name="Presidency (days)" Expression="DateDiffDay([Presidency Start], Iif([Presidency End] Is Null, Now(), [Presidency End]))" DataType="Auto" />
+        <CalculatedField Name="Inauguration age" Expression="Round(DateDiffDay([Birth Date], [Presidency Start]) / 365.0)" DataType="Auto" />
+        <CalculatedField Name="Birth Date 4 July" Expression="Iif(GetDay([Birth Date]) = 4 And GetMonth([Birth Date]) = 7, 1, 0)" DataType="Auto" />
+        <CalculatedField Name="Death Date 4 July" Expression="Iif(GetDay([Death Date]) = 4 And GetMonth([Death Date]) = 7, 1, 0)" DataType="Auto" />
+      </CalculatedFields>
+    </ExcelDataSource>
+  </DataSources>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Presidents list" ShowCaption="false" DataSource="dashboardExcelDataSource1">
+      <DataItems>
+        <Dimension DataMember="President" SortOrder="Descending" SortByMeasure="DataItem2" DefaultId="DataItem0" />
+        <Measure DataMember="Presidency (days)" DefaultId="DataItem2">
+          <NumericFormat FormatType="General" Unit="Ones" />
+        </Measure>
+        <Measure DataMember="Inauguration age" SummaryType="Min" DefaultId="DataItem1" />
+        <Measure DataMember="Birth Date 4 July" Name="Birth Date 4 July" SummaryType="Min" DefaultId="DataItem3" />
+        <Measure DataMember="Death Date 4 July" Name="Death Date 4 July" SummaryType="Min" DefaultId="DataItem4" />
+        <Measure DataMember="Death Date" Name="Death Date" SummaryType="Min" DefaultId="DataItem5" />
+      </DataItems>
+      <HiddenMeasures>
+        <Measure DefaultId="DataItem3" />
+        <Measure DefaultId="DataItem4" />
+        <Measure DefaultId="DataItem5" />
+      </HiddenMeasures>
+      <FormatRules>
+        <GridItemFormatRule Name="FormatRule 1" ApplyToRow="true" DataItem="DataItem2">
+          <FormatConditionRangeSet ValueType="Number">
+            <RangeSet>
+              <Ranges>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="0" />
+                  <AppearanceSettings AppearanceType="PaleGray" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Int32" Value="1461" />
+                  <AppearanceSettings AppearanceType="PaleBlue" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Int32" Value="2922" />
+                  <AppearanceSettings AppearanceType="PaleOrange" />
+                </RangeInfo>
+              </Ranges>
+            </RangeSet>
+          </FormatConditionRangeSet>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="FormatRule 2" DataItem="DataItem3" DataItemApplyTo="DataItem0">
+          <FormatConditionValue>
+            <IconSettings IconType="ShapeGreenCircle" />
+            <Value1 Type="System.Int32" Value="1" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="FormatRule 3" DataItem="DataItem4" DataItemApplyTo="DataItem0">
+          <FormatConditionValue>
+            <IconSettings IconType="ShapeRedDiamond" />
+            <Value1 Type="System.Int32" Value="1" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="FormatRule 4" DataItem="DataItem5" DataItemApplyTo="DataItem0">
+          <FormatConditionExpression Expression="[DataItem5] Is Null">
+            <AppearanceSettings AppearanceType="FontBold" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridHyperlinkColumn Weight="71.919877682224268" UriPattern="http://en.wikipedia.org/wiki/{0}">
+          <Uri DefaultId="DataItem0" />
+        </GridHyperlinkColumn>
+        <GridMeasureColumn Name="Inauguration age (years)" Weight="71.33516322952326">
+          <Measure DefaultId="DataItem1" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Presidency (days)" Weight="74.843449945729319">
+          <Measure DefaultId="DataItem2" />
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions ColumnWidthMode="Manual" />
+    </Grid>
+    <ChoroplethMap ComponentName="choroplethMapDashboardItem1" Name="Birth state" DataSource="dashboardExcelDataSource1" ShapefileArea="USA" ShapeTitleAttributeName="POSTAL" AttributeName="NAME">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="President" Name="President (count)" SummaryType="CountDistinct" DefaultId="DataItem0" />
+        <Dimension DataMember="State" DefaultId="DataItem1" />
+      </DataItems>
+      <ViewArea TopLatitude="49.369672064487254" BottomLatitude="22.722765208057595" LeftLongitude="-124.70997774915153" RightLongitude="-66.987022055984482" CenterPointLatitude="37.20824763267364" CenterPointLongitude="-95.848499902568008" />
+      <MapLegend />
+      <WeightedLegend />
+      <AttributeDimension DefaultId="DataItem1" />
+      <Maps>
+        <ValueMap>
+          <Value DefaultId="DataItem0" />
+          <CustomScale PercentScale="false">
+            <RangeStop>0</RangeStop>
+            <RangeStop>2</RangeStop>
+            <RangeStop>5</RangeStop>
+          </CustomScale>
+          <CustomPalette>
+            <Color>-13194546</Color>
+            <Color>-8355585</Color>
+            <Color>-41622</Color>
+          </CustomPalette>
+        </ValueMap>
+      </Maps>
+    </ChoroplethMap>
+    <Pie ComponentName="pieDashboardItem1" Name="Party" DataSource="dashboardExcelDataSource1" LabelContentType="ArgumentAndValue" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="Party" DefaultId="DataItem0" />
+        <Measure DataMember="President" SummaryType="Count" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <Card ComponentName="cardDashboardItem1" Name="Most popular first name" DataSource="dashboardExcelDataSource1">
+      <InteractivityOptions IgnoreMasterFilters="true" />
+      <DataItems>
+        <Measure DataMember="First Name" SummaryType="Count" DefaultId="DataItem0" />
+        <Dimension DataMember="First Name" TopNEnabled="true" TopNCount="1" TopNMeasure="DataItem0" DefaultId="DataItem1" />
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem1" />
+      </SeriesDimensions>
+      <Card>
+        <ActualValue DefaultId="DataItem0" />
+        <AbsoluteVariationNumericFormat FormatType="Number" Precision="0" />
+        <PercentVariationNumericFormat FormatType="Percent" />
+        <PercentOfTargetNumericFormat FormatType="Percent" />
+        <LayoutTemplate MinWidth="80" Type="Stretched">
+          <TopValue Visible="true" ValueType="ActualValue" DimensionIndex="0" />
+          <MainValue Visible="true" ValueType="Title" DimensionIndex="0" />
+          <SubValue Visible="true" ValueType="Subtitle" DimensionIndex="0" />
+          <BottomValue1 Visible="true" ValueType="PercentVariation" DimensionIndex="0" />
+          <BottomValue2 Visible="true" ValueType="AbsoluteVariation" DimensionIndex="0" />
+          <DeltaIndicator Visible="true" />
+          <Sparkline Visible="true" />
+        </LayoutTemplate>
+      </Card>
+    </Card>
+    <Card ComponentName="cardDashboardItem2" Name="Max inauguration age" DataSource="dashboardExcelDataSource1">
+      <InteractivityOptions IgnoreMasterFilters="true" />
+      <DataItems>
+        <Measure DataMember="Inauguration age" SummaryType="Min" DefaultId="DataItem0" />
+        <Dimension DataMember="President" SortByMeasure="DataItem0" TopNEnabled="true" TopNCount="1" TopNMeasure="DataItem0" DefaultId="DataItem1" />
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem1" />
+      </SeriesDimensions>
+      <Card>
+        <ActualValue DefaultId="DataItem0" />
+        <AbsoluteVariationNumericFormat FormatType="Number" Precision="0" />
+        <PercentVariationNumericFormat FormatType="Percent" />
+        <PercentOfTargetNumericFormat FormatType="Percent" />
+        <LayoutTemplate MinWidth="80" MaxWidth="150" Type="Lightweight">
+          <MainValue Visible="true" ValueType="ActualValue" DimensionIndex="0" />
+          <SubValue Visible="true" ValueType="Title" DimensionIndex="0" />
+          <BottomValue Visible="true" ValueType="Subtitle" DimensionIndex="0" />
+          <DeltaIndicator Visible="false" />
+          <Sparkline Visible="false" />
+        </LayoutTemplate>
+      </Card>
+    </Card>
+    <Card ComponentName="cardDashboardItem3" Name="Min inauguration age" DataSource="dashboardExcelDataSource1">
+      <InteractivityOptions IgnoreMasterFilters="true" />
+      <DataItems>
+        <Measure DataMember="Inauguration age" Name="Inauguration age" SummaryType="Min" DefaultId="DataItem0" />
+        <Dimension DataMember="President" SortByMeasure="DataItem0" TopNEnabled="true" TopNCount="1" TopNMode="Bottom" TopNMeasure="DataItem0" DefaultId="DataItem1" />
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem1" />
+      </SeriesDimensions>
+      <Card>
+        <ActualValue DefaultId="DataItem0" />
+        <AbsoluteVariationNumericFormat FormatType="Number" Precision="0" />
+        <PercentVariationNumericFormat FormatType="Percent" />
+        <PercentOfTargetNumericFormat FormatType="Percent" />
+        <LayoutTemplate MinWidth="80" MaxWidth="150" Type="Lightweight">
+          <MainValue Visible="true" ValueType="ActualValue" DimensionIndex="0" />
+          <SubValue Visible="true" ValueType="Title" DimensionIndex="0" />
+          <BottomValue Visible="true" ValueType="Subtitle" DimensionIndex="0" />
+          <DeltaIndicator Visible="false" />
+          <Sparkline Visible="false" />
+        </LayoutTemplate>
+      </Card>
+    </Card>
+    <Treemap ComponentName="treemapDashboardItem1" Name="Presidents count by state" DataSource="dashboardExcelDataSource1" TilesLabelContentType="ArgumentAndValue">
+      <InteractivityOptions IsDrillDownEnabled="true" />
+      <DataItems>
+        <Dimension DataMember="State" TopNCount="3" TopNMeasure="DataItem1" DefaultId="DataItem0" />
+        <Measure DataMember="President" Name="President (count)" SummaryType="Count" DefaultId="DataItem1" />
+        <Dimension DataMember="Party" DefaultId="DataItem2" />
+      </DataItems>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+        <Argument DefaultId="DataItem2" />
+      </Arguments>
+    </Treemap>
+    <Card ComponentName="cardDashboardItem4" Name="Longest presidency (days)" DataSource="dashboardExcelDataSource1">
+      <InteractivityOptions IgnoreMasterFilters="true" />
+      <DataItems>
+        <Dimension DataMember="President" TopNEnabled="true" TopNCount="1" TopNMeasure="DataItem0" DefaultId="DataItem1" />
+        <Measure DataMember="Presidency (days)" SummaryType="Min" DefaultId="DataItem0">
+          <NumericFormat FormatType="General" />
+        </Measure>
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem1" />
+      </SeriesDimensions>
+      <Card>
+        <ActualValue DefaultId="DataItem0" />
+        <AbsoluteVariationNumericFormat FormatType="Number" Precision="0" />
+        <PercentVariationNumericFormat FormatType="Percent" />
+        <PercentOfTargetNumericFormat FormatType="Percent" />
+        <LayoutTemplate MinWidth="80" MaxWidth="150" Type="Lightweight">
+          <MainValue Visible="true" ValueType="ActualValue" DimensionIndex="0" />
+          <SubValue Visible="true" ValueType="Title" DimensionIndex="0" />
+          <BottomValue Visible="true" ValueType="Subtitle" DimensionIndex="0" />
+          <DeltaIndicator Visible="false" />
+          <Sparkline Visible="false" />
+        </LayoutTemplate>
+      </Card>
+    </Card>
+    <Card ComponentName="cardDashboardItem5" Name="Shortest presidency (days)" DataSource="dashboardExcelDataSource1">
+      <InteractivityOptions IgnoreMasterFilters="true" />
+      <DataItems>
+        <Dimension DataMember="President" TopNEnabled="true" TopNCount="1" TopNMode="Bottom" TopNMeasure="DataItem0" DefaultId="DataItem1" />
+        <Measure DataMember="Presidency (days)" SummaryType="Min" DefaultId="DataItem0">
+          <NumericFormat FormatType="General" />
+        </Measure>
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem1" />
+      </SeriesDimensions>
+      <Card>
+        <ActualValue DefaultId="DataItem0" />
+        <AbsoluteVariationNumericFormat FormatType="Number" Precision="0" />
+        <PercentVariationNumericFormat FormatType="Percent" />
+        <PercentOfTargetNumericFormat FormatType="Percent" />
+        <LayoutTemplate MinWidth="80" MaxWidth="150" Type="Lightweight">
+          <MainValue Visible="true" ValueType="ActualValue" DimensionIndex="0" />
+          <SubValue Visible="true" ValueType="Title" DimensionIndex="0" />
+          <BottomValue Visible="true" ValueType="Subtitle" DimensionIndex="0" />
+          <DeltaIndicator Visible="false" />
+          <Sparkline Visible="false" />
+        </LayoutTemplate>
+      </Card>
+    </Card>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="86.171003717472118">
+        <LayoutGroup Weight="54.1029207232267">
+          <LayoutItem DashboardItem="choroplethMapDashboardItem1" Weight="47.886108714408977" />
+          <LayoutItem DashboardItem="gridDashboardItem1" Weight="52.113891285591023" />
+        </LayoutGroup>
+        <LayoutGroup Weight="45.8970792767733">
+          <LayoutItem DashboardItem="pieDashboardItem1" Weight="47.886108714408977" />
+          <LayoutItem DashboardItem="treemapDashboardItem1" Weight="52.113891285591023" />
+        </LayoutGroup>
+      </LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="13.82899628252788">
+        <LayoutItem DashboardItem="cardDashboardItem1" Weight="20.862308762169679" />
+        <LayoutItem DashboardItem="cardDashboardItem2" Weight="19.6105702364395" />
+        <LayoutItem DashboardItem="cardDashboardItem3" Weight="19.6105702364395" />
+        <LayoutItem DashboardItem="cardDashboardItem4" Weight="19.332406119610571" />
+        <LayoutItem DashboardItem="cardDashboardItem5" Weight="20.58414464534075" />
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>
