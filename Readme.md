@@ -10,7 +10,7 @@
 <!-- default file list end -->
 # ASP.NET MVC Dashboard Designer - How to enable users to download a dashboard XML definition
 <!-- run online -->
-**[[Run Online]](https://codecentral.devexpress.com/t585658)**
+**[[Run Online]](https://codecentral.devexpress.com/t585658/)**
 <!-- run online end -->
 
 
