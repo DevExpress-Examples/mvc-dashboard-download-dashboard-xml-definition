@@ -3,10 +3,10 @@ using System.Web.Routing;
 using DevExpress.DashboardWeb;
 using DevExpress.DashboardWeb.Mvc;
 using DevExpress.Web.Mvc;
-using DevExpress.Utils;
 using System.Xml.Linq;
 using DevExpress.DashboardCommon;
 using DevExpress.DataAccess.Excel;
+using DevExpress.Security.Resources;
 
 namespace DevExpress.Razor {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -39,7 +39,7 @@ namespace DevExpress.Razor {
             RegisterRoutes(RouteTable.Routes);
             
             ModelBinders.Binders.DefaultBinder = new DevExpressEditorsBinder();
-            UrlAccessSecurityLevelSetting.SecurityLevel = UrlAccessSecurityLevel.FilesFromBaseDirectory;
+            AccessSettings.StaticResources.TrySetRules(DirectoryAccessRule.Allow());
 
             // See https://documentation.devexpress.com/Dashboard/DevExpress.DashboardWeb.DashboardFileStorage.class
             //DashboardConfigurator.Default.SetDashboardStorage(new DashboardFileStorage(@"~/App_Data/Dashboards"));

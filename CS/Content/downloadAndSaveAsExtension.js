@@ -7,8 +7,8 @@ function DownloadAndSaveAsDashboardExtension(dashboardControl) {
     this.newName = "New Dashboard Name";
     this.toolbox = dashboardControl.findExtension("toolbox");
 
-    dashboardControl.registerIcon(TOOLBAR_DOWNLOAD_ICON);
-    dashboardControl.registerIcon(TOOLBAR_SAVE_AS_ICON);
+    DevExpress.Dashboard.ResourceManager.registerIcon(TOOLBAR_DOWNLOAD_ICON);
+    DevExpress.Dashboard.ResourceManager.registerIcon(TOOLBAR_SAVE_AS_ICON);
 
     this._menuSaveAsItem = new DevExpress.Dashboard.DashboardMenuItem("save-as", "Save As...", 120, 0, function() { _this.showSaveAsPopup(); });
     this._menuSaveAsItem.hasSeparator = true;
