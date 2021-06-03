@@ -14,3 +14,7 @@
 The example shows how to allow end users to save a dashboard to a [session](https://docs.microsoft.com/en-us/dotnet/api/system.web.sessionstate.httpsessionstate) and download a dashboard XML definition on the client side. For this, use the corresponding **Download** and **Save As...** buttons in the [Toolbox](https://docs.devexpress.com/Dashboard/117442/web-dashboard/ui-elements/toolbox).
 
 ![](web-dashboard.png)
+
+## Documentation
+
+* [Save a Dashboard](https://docs.devexpress.com/Dashboard/116992/web-dashboard/create-dashboards-on-the-web/save-a-dashboard)
