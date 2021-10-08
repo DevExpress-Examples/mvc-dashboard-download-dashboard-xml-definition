@@ -10,13 +10,13 @@ function DownloadAndSaveAsDashboardExtension(dashboardControl) {
     DevExpress.Dashboard.ResourceManager.registerIcon(TOOLBAR_DOWNLOAD_ICON);
     DevExpress.Dashboard.ResourceManager.registerIcon(TOOLBAR_SAVE_AS_ICON);
 
-    this._menuSaveAsItem = new DevExpress.Dashboard.DashboardMenuItem("save-as", "Save As...", 120, 0, function() { _this.showSaveAsPopup(); });
+    this._menuSaveAsItem = new DevExpress.Dashboard.Designer.DashboardMenuItem("save-as", "Save As...", 120, 0, function() { _this.showSaveAsPopup(); });
     this._menuSaveAsItem.hasSeparator = true;
     this._menuSaveAsItem.data = _this;
 
-    this._toolbarGroup = new DevExpress.Dashboard.DashboardToolbarGroup("save", "Save", 60,
-        new DevExpress.Dashboard.DashboardToolbarItem("download", function () { window.open(baseDevExpressDemoUrl + "Home/Xml/?dashboardId=" + dashboardControl.dashboardContainer().id, '_blank'); }, "toolbar-download", "Download"),
-        new DevExpress.Dashboard.DashboardToolbarItem("save-as", function () { _this.showSaveAsPopup(); }, "toolbar-save-as", "Save As...")
+    this._toolbarGroup = new DevExpress.Dashboard.Designer.DashboardToolbarGroup("save", "Save", 60,
+        new DevExpress.Dashboard.Designer.DashboardToolbarItem("download", function () { window.open(baseDevExpressDemoUrl + "Home/Xml/?dashboardId=" + dashboardControl.dashboardContainer().id, '_blank'); }, "toolbar-download", "Download"),
+        new DevExpress.Dashboard.Designer.DashboardToolbarItem("save-as", function () { _this.showSaveAsPopup(); }, "toolbar-save-as", "Save As...")
     );
 
     this.showSaveAsPopup = function () {
