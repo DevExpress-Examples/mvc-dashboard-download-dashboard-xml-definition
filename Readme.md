@@ -23,7 +23,7 @@ The example shows how to allow end users to save a dashboard to a [session](htt
 
 * [Save a Dashboard](https://docs.devexpress.com/Dashboard/116992/web-dashboard/create-dashboards-on-the-web/save-a-dashboard)
 <!-- feedback -->
-## Does this example address your development requirements/objectives?
+## Does This Example Address Your Development Requirements/Objectives?
 
 [<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=mvc-dashboard-download-dashboard-xml-definition&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=mvc-dashboard-download-dashboard-xml-definition&~~~was_helpful=no)
 
